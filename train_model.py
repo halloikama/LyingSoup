@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 import os
 import shutil
 import mlflow.keras
@@ -11,7 +12,6 @@ from keras.utils import to_categorical
 
 from replay_processing.replay_preprocess import process_replays_from_local_folder
 
-os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 MODEL_PATH ="models/soup"
 
 def train(X, Y, n_epochs, validation_split, batch_size):
@@ -51,12 +51,6 @@ def train_model_from_local_files(path_to_replays, save_df=False, from_json=False
         if os.path.exists(MODEL_PATH):
             shutil.rmtree(MODEL_PATH)
         mlflow.keras.save_model(trained_model, MODEL_PATH)
-
-
-def predict(test_input):
-    model = mlflow.keras.load_model(MODEL_PATH)
-    test_output = model.predict(test_input, verbose=False)
-    return test_output
 
 if __name__ == "__main__":
     train_model_from_local_files("data/all_data", save_df=0, from_json=0, save_trained_model=True)

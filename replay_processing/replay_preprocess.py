@@ -64,7 +64,7 @@ def get_stats(replay_object):
     zipper = zip(d_supply, d_wsratio)
     diff_values_zipped = np.array(list(zipper))
     data_dict_full = {"d_minerals":d_minerals.tolist(), "d_gas":d_gas.tolist(),"d_supply":d_supply.tolist(), "d_mineralarmy":d_mineralarmy.tolist(), 
-                      "d_gasarmy":d_gasarmy.tolist(),"d_wsratio":d_wsratio.tolist(), "XCV": diff_values_zipped}
+                      "d_gasarmy":d_gasarmy.tolist(),"d_wsratio":d_wsratio.tolist(), "XCV": diff_values_zipped, "frames": np.array(list(zip(*p1_minerals))[0])}
     
 
     return diff_values_zipped, data_dict_full
