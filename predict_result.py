@@ -9,9 +9,7 @@ def predict(test_input, model_path = "models/soup"):
 
 def did_the_soup_lie(prediction, players):
     rounded_result = int(prediction.round()[0][0])
-    print()
-
-    if (players[1] == 'win') & (rounded_result == 1):
+    if (players[1] == 'Loss') and (rounded_result == 1):
         return True
     else:
         return False
@@ -21,7 +19,9 @@ def main():
     test_input = np.array(parse.get('seq'))
     output = predict(test_input)
 
-    if did_the_soup_lie(output,participants):
+    #print(test_input[0][:5])
+
+    if did_the_soup_lie(output,participants) == True:
         print("The soup DOES lie")
     else:
         print("The soup didn't lie")
