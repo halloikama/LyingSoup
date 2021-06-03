@@ -131,8 +131,7 @@ def process_replays_from_local_folder(path_to_replays, VERBOSE=False):
     """
 
     """
-
-    print("started processing replay file")
+    print("started processing replay file from local folder")
     full_df = pd.DataFrame()
     with os.scandir(path_to_replays) as dirs:
         for entry in dirs:
@@ -143,5 +142,21 @@ def process_replays_from_local_folder(path_to_replays, VERBOSE=False):
                 print(f'something went wrong, parsing of {path_to_replays}/{entry.name} failed')
                 print()
                 continue
+
+    return full_df, participants, data_dict_full, parse, replay_stats
+
+def process_replays_from_file(uploaded_file, VERBOSE=False):
+    """
+
+    """
+    print("started processing replay file from file")
+    full_df = pd.DataFrame()
+    with open(uploaded_file, "r") as file_object: 
+        try:
+            parse, participants, data_dict_full, replay_stats = parse_input(file_object, VERBOSE=VERBOSE)
+            full_df = full_df.append(data_dict_full, ignore_index=True)
+        except:
+            print(f'something went wrong, parsing of file failed')
+            print()
 
     return full_df, participants, data_dict_full, parse, replay_stats
