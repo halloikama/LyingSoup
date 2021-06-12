@@ -1,11 +1,14 @@
 <html>
   <head>
-    <title>File Upload</title>
+    <title>Lying Soup?</title>
   </head>
   <body>
-    <h1>File Upload</h1>
+    <h1>Upload replay to check if the soup lied!</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       <p><input type="file" name="file" accept=".SC2Replay"></p>
+      <p><small>Enter timestamp for when to check (leave empty for end of the game)</small></p>
+      <p>minutes: <input type="number" name="minutes" step="1" pattern="\d+" min="0"></p>
+      <p>seconds: <input type="number" name="seconds" step="1" pattern="\d+" min="0" max="59"></p>
       <p><input type="submit" value="Submit"></p>
     </form>
   </body>
