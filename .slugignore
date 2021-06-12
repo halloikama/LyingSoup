@@ -1,4 +1,6 @@
 data/*
+/data
 *__pycache__
 .vscode
 temp/*
+train_model.py

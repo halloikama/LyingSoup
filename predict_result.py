@@ -37,8 +37,24 @@ def did_the_soup_lie(path_to_replay, model, timestamp):
 
     rounded_result = int(pred.round()[0][0])
 
-    # the supply lied if player 1 loses and the model predict it would have won
-    if (participants[1] == "Loss") and (rounded_result == 1):
-        return True
+    if participants[1] == 'Win':
+        winner = participants[0]
+        prob_of_win = pred[0][0]
     else:
-        return False
+        winner = participants[2]
+        prob_of_win = 1-pred[0][0]
+
+
+    results_dict = {'participants': participants,
+                    'winner': winner,
+                    'replay_stats': replay_stats,
+                    'is_lie': False,
+                    'prob_of_winning': prob_of_win*100,
+                    'time': closest_frame_at_time}
+    print(rounded_result)
+
+    # the supply lied if player 1 loses and the model predict it would have won
+    if prob_of_win < 0.5:
+        results_dict['is_lie'] = True
+
+    return results_dict
