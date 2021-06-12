@@ -2,8 +2,6 @@ import pandas as pd
 import mlflow
 import mlflow.keras
 import flask
-import tensorflow 
-import tensorflow.keras as k
 import os
 from flask import render_template, request, redirect, url_for, abort
 from werkzeug.utils import secure_filename
