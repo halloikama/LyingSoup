@@ -19,7 +19,7 @@ app.config['UPLOAD_EXTENSIONS'] = ['.SC2Replay']
 app.config['UPLOAD_PATH'] = 'uploads'
 
 def get_result(replay_file, time):
-    payload = {"is_lie": did_the_soup_lie(replay_file, model, time)}
+    payload = did_the_soup_lie(replay_file, model, time)
     return payload
 
 
@@ -59,13 +59,20 @@ def upload_file():
 
             timestamp = time_min*60+time_sec
 
-            result = get_result(uploaded_file, timestamp)
+            payload = get_result(uploaded_file, timestamp)
 
-            if result['is_lie']:
-                return render_template('result_lie.html')
+            if payload['is_lie'] == True:
+                return render_template('result_lie.html',
+                                        p1=payload['participants'][0], 
+                                        p2 = payload['participants'][2],
+                                        winner = payload['winner'],
+                                        prob = payload['prob_of_winning'])
             else:
-                return render_template('result.html')
-            
+                return render_template('result.html',
+                                         p1=payload['participants'][0], 
+                                         p2 = payload['participants'][2],
+                                         winner = payload['winner'],
+                                         prob = payload['prob_of_winning'])
 
     return render_template('upload.html')
 
