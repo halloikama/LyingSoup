@@ -29,12 +29,6 @@ def get_result(replay_file, time):
 def too_large(e):
     return "File is too large", 413
 
-@app.route('/api', methods=['GET','POST'])    
-def get_payload():
-    payload = {"is_lie": False}
-    payload_json = flask.jsonify(payload)
-    return payload_json
-
 @app.route('/', methods=['GET','POST'])
 def upload_file():
     if request.method == 'POST': 
