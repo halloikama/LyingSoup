@@ -59,20 +59,15 @@ def upload_file():
 
             timestamp = time_min*60+time_sec
 
+            print('getting results')
             payload = get_result(uploaded_file, timestamp)
-
-            if payload['is_lie'] == True:
-                return render_template('result_lie.html',
+            print('render_template')
+            return render_template('result.html',
+                                        is_lie = payload['is_lie'],
                                         p1=payload['participants'][0], 
                                         p2 = payload['participants'][2],
                                         winner = payload['winner'],
                                         prob = payload['prob_of_winning'])
-            else:
-                return render_template('result.html',
-                                         p1=payload['participants'][0], 
-                                         p2 = payload['participants'][2],
-                                         winner = payload['winner'],
-                                         prob = payload['prob_of_winning'])
 
     return render_template('upload.html')
 
