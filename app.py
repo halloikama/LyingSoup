@@ -3,7 +3,9 @@ import mlflow
 import mlflow.keras
 import flask
 import os
-from flask import render_template, request, redirect, url_for, abort
+import json
+import ast
+from flask import render_template, request, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
 from predict_result import did_the_soup_lie
 
@@ -20,9 +22,20 @@ app.config['UPLOAD_PATH'] = 'uploads'
 
 def get_result(replay_file, time):
     payload = did_the_soup_lie(replay_file, model, time)
+    #payload = flask.jsonify(payload)
     return payload
 
-
+@app.route('/result', methods=['GET'])
+def show_results():
+    payload = request.args['payload']
+    results_dict = ast.literal_eval(payload)
+    return render_template('result.html',
+                                        is_lie = results_dict['is_lie'],
+                                        p1=results_dict['participants'][0], 
+                                        p2 = results_dict['participants'][2],
+                                        winner = results_dict['winner'],
+                                        prob = results_dict['prob_of_winning'])
+    
 @app.errorhandler(413)
 def too_large(e):
     return "File is too large", 413
@@ -59,15 +72,19 @@ def upload_file():
 
             timestamp = time_min*60+time_sec
 
-            print('getting results')
             payload = get_result(uploaded_file, timestamp)
-            print('render_template')
+
+            return redirect(url_for('show_results', payload=payload, name=filename))
+
+            '''
             return render_template('result.html',
                                         is_lie = payload['is_lie'],
                                         p1=payload['participants'][0], 
                                         p2 = payload['participants'][2],
                                         winner = payload['winner'],
                                         prob = payload['prob_of_winning'])
-
+            '''
     return render_template('upload.html')
+
+
 

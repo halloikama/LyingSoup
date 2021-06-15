@@ -3,7 +3,11 @@
         <title>Did the soup lie?</title>
     </head>
     <body>
-        <h1>Did the soup lie? {{is_lie}}</h1>
+        {% if is_lie == True %}
+        <h1>The soup lied!</h1>
+        {% else %}
+        <h1>The soup did not lie!</h1>
+        {% endif %}
         <p>{{p1}} vs {{p2}}</p>
         <p>WINNER: {{winner}}</p>
         <p>predicted percent chance of winning: {{prob}}%</p>
