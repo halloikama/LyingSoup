@@ -34,7 +34,8 @@ def show_results():
                                         p1=results_dict['participants'][0], 
                                         p2 = results_dict['participants'][2],
                                         winner = results_dict['winner'],
-                                        prob = results_dict['prob_of_winning'])
+                                        prob = results_dict['prob_of_winning'],
+                                        time = results_dict['time'])
     
 @app.errorhandler(413)
 def too_large(e):

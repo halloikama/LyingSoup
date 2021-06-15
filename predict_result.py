@@ -44,7 +44,7 @@ def did_the_soup_lie(path_to_replay, model, timestamp):
                     'winner': str(winner),
                     'is_lie': False,
                     'prob_of_winning': float(prob_of_win*100),
-                    'time': int(closest_frame_at_time),
+                    'time': float(closest_frame_at_time/16/1.4),
                     }
 
     # the supply lied if player 1 loses and the model predict it would have won
